@@ -1,40 +1,35 @@
 package com.app.model;
 
-import com.app.enums.Role;
+import java.util.List;
 
+import com.app.enums.TestType;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="user")
-public class User {
+@Entity
+@Table(name="category")
+public class Category {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private TestType type;
 	
-	private String mobileNo;
-	
-	private String firstName;
-	
-	private String lastName;
-	
-	private String email;
-    
-	private String address;
-	
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	
-	
+	@OneToMany(mappedBy = "category" , cascade= CascadeType.ALL, fetch=FetchType.EAGER)
+	@ToString.Exclude
+	private List<Question> questions;
 }
